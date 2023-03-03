@@ -36,6 +36,7 @@ class Game:
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_background()
+        self.draw_dino()
         pygame.display.update()
         pygame.display.flip()
 
@@ -47,3 +48,7 @@ class Game:
             self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
         self.x_pos_bg -= self.game_speed
+
+    def draw_dino(self):
+        image_width = ICON.get_width()
+        self.screen.blit(ICON,(300, 300))
