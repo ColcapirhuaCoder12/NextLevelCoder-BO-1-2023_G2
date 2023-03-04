@@ -30,14 +30,9 @@ class Dinosaur:
             self.duck()
         elif self.dino_jumping:
             self.jump()
-
-        if self.step_index == 10:
-            self.step_index = 0
        
         if user_input[pygame.K_DOWN] and not self.dino_jumping:
-            self.dino_running = False
-            self.dino_ducking = True
-            self.dino_jumping = False
+            self.duck()
 
         if user_input[pygame.K_UP] and not self.dino_jumping:
             self.dino_running = False
@@ -48,6 +43,9 @@ class Dinosaur:
             self.dino_running = True
             self.dino_ducking = False
             self.dino_jumping = False
+        
+        if self.step_index == 10:
+            self.step_index = 0
           
 
 
