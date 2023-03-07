@@ -30,6 +30,16 @@ class ObstacleManager:
                  pygame.time.delay(500)
                  game.playing = False
                  break 
+            
+            if len(self.obstacles) == 1 and isinstance(self.obstacles[0], Cactus):
+                self.obstacles.append(Bird(BIRD, 0))
+        
+            for obstacle in self.obstacles:
+                 obstacle.update(not game.game_speed, self.obstacles)
+                 if game.player.dinosaur_rect.colliderect(obstacle.rect):
+                  pygame.time.delay(500)
+                  game.playing = False
+                  break
 
     def draw(self, screen):
         for obstacle in self.obstacles:

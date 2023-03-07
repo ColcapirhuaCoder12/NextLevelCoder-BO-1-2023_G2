@@ -18,7 +18,7 @@ class Game:
         self.y_pos_bg = 380
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
-        self.Onebird = Bird()
+       
 
     def run(self):
         # Game loop: events - update - draw
@@ -38,7 +38,7 @@ class Game:
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
         self.obstacle_manager.update(self)
-        self.Onebird.update(self, 2)
+        
       
         
 
@@ -51,7 +51,7 @@ class Game:
         
         self.obstacle_manager.draw(self.screen)
 
-        self.Onebird.draw(self.screen)
+       
        
         
         pygame.display.update()
