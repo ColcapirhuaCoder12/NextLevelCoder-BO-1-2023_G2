@@ -8,7 +8,7 @@ class Dinosaur:
     POS_X = 80
     POS_Y = 310
     DUCK_POS_Y = 340
-    JUMP_VEL = 6.5
+    JUMP_VEL = 8.5
 
 
     def __init__(self):

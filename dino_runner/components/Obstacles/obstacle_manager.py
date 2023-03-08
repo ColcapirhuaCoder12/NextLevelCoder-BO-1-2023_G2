@@ -1,7 +1,7 @@
-from dino_runner.components.obstacles.cactus import Cactus, LCactie
+from dino_runner.components.obstacles.cactus import Cactus, Lcactie
 from dino_runner.components.obstacles.Bird import Bird
 from dino_runner.utils.constants import SMALL_CACTUS, LARGE_CACTUS, BIRD
-
+import random
 
 import pygame
 
@@ -11,9 +11,17 @@ class ObstacleManager:
         self.obstacles = []
 
     def update(self, game):
-        if len(self.obstacles) == 0:
-            self.obstacles.append(Cactus(SMALL_CACTUS))
+        index = random.randint(0,2)
+        
 
+        if len(self.obstacles) == 0:
+            if index == 0:
+                self.obstacles.append(Cactus(SMALL_CACTUS))
+            elif index == 1:
+                self.obstacles.append(Lcactie(LARGE_CACTUS))
+            elif index == 2: 
+                self.obstacles.append(Bird(BIRD, 0))
+            
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
             if game.player.dinosaur_rect.colliderect(obstacle.rect):
@@ -21,26 +29,9 @@ class ObstacleManager:
                 game.playing = False
                 break
             
-            if len(self.obstacles) == 0:
-                self.obstacles.append(LCactie(LARGE_CACTUS))
-
-            for obstacle in self.obstacles:
-                obstacle.update(not game.game_speed, self.obstacles)
-                if game.player.dinosaur_rect.colliderect(obstacle.rect):
-                 pygame.time.delay(500)
-                 game.playing = False
-                 break 
-            
-            if len(self.obstacles) == 1 and isinstance(self.obstacles[0], Cactus):
-                self.obstacles.append(Bird(BIRD, 0))
-        
-            for obstacle in self.obstacles:
-                 obstacle.update(not game.game_speed, self.obstacles)
-                 if game.player.dinosaur_rect.colliderect(obstacle.rect):
-                  pygame.time.delay(500)
-                  game.playing = False
-                  break
-
     def draw(self, screen):
         for obstacle in self.obstacles:
             obstacle.draw(screen)
+
+    def reset_obstacles(self):
+        self.obstacles = []
