@@ -2,7 +2,7 @@ import pygame
 from dino_runner.components.Text_utils import TextUtils
 from dino_runner.components.power_ups.pwr_up_manager import PowerUpManager
 
-from dino_runner.utils.constants import BG, COLORS, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, RUNNING
+from dino_runner.utils.constants import BG, COLORS, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, RUNNING,MENU
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 
@@ -40,6 +40,7 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.playing = False
+            
 
     def update(self):
         user_input = pygame.key.get_pressed()
@@ -87,6 +88,9 @@ class Game:
     def show_menu(self, death_count = 0):
         self.game_running = True
         self.screen.fill(COLORS['white'])
+        bakground = MENU
+        self.screen.blit(bakground, (0, 0))
+
 
         self.print_menu_elements(death_count)
 
@@ -113,8 +117,4 @@ class Game:
                 pygame.display.quit()
                 pygame.quit()
              
-            if event.type == pygame.KEYDOWN:
-                self.run()
-
-            if event.type == pygame.K_SPACE:
-                self.run = False
+            

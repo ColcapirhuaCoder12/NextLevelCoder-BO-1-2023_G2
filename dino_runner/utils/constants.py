@@ -81,3 +81,4 @@ COLORS = {
     'blue': (0, 0, 255)
 }
 
+MENU = pygame.image.load(os.path.join(IMG_DIR, 'bluemoon.png' ))
