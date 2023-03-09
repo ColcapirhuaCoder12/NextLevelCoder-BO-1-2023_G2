@@ -1,7 +1,8 @@
 import pygame
 from dino_runner.components.Text_utils import TextUtils
+from dino_runner.components.power_ups.pwr_up_manager import PowerUpManager
 
-from dino_runner.utils.constants import BG, COLORS, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS,RUNNING
+from dino_runner.utils.constants import BG, COLORS, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, RUNNING
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 
@@ -22,6 +23,8 @@ class Game:
         self.points = 0
         self.text_utils = TextUtils()
         self.game_running = True
+        self.pwr_up_manager = PowerUpManager()
+    
 
     def run(self):
         # Game loop: events - update - draw
@@ -42,7 +45,7 @@ class Game:
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
         self.obstacle_manager.update(self)
-        
+        self.pwr_up_manager.update(self.points, self.game_speed, self.player)
       
         
 
@@ -55,6 +58,8 @@ class Game:
         self.player.draw(self.screen)
         
         self.obstacle_manager.draw(self.screen)
+
+        self.pwr_up_manager.draw(self.screen)
 
         self.score() 
        
@@ -76,6 +81,7 @@ class Game:
     def score(self):
         self.points += 1
         Text, Text_rect = self.text_utils.get_score(self.points)
+        self.player.check_invincibility()
         self.screen.blit(Text, Text_rect)
 
     def show_menu(self, death_count = 0):
@@ -88,14 +94,17 @@ class Game:
         self.handle_key_event()
     
     def print_menu_elements(self,death_count = 0):
+
         Text, Text_Rect = self.text_utils.get_centered_message('Press any key to start')
         self.screen.blit(Text, Text_Rect)
         if death_count > 0:
             score, score_rect = self.text_utils.get_centered_message(
-                'Your score is:' + str(self.points),
+                'Your score was:' + str(self.points),
                 heigth=SCREEN_HEIGHT//2 +50)     
             self.screen.blit(score, score_rect)
         self.screen.blit(RUNNING[0], (SCREEN_WIDTH//2 - 40, SCREEN_HEIGHT//2 -140))
+    
+    
     def handle_key_event(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
