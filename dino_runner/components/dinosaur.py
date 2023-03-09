@@ -1,6 +1,8 @@
 import pygame
+from dino_runner.components.Text_utils import TextUtils
 from pygame.sprite import Sprite
 from dino_runner.utils.constants import (
+    HAMMER_TYPE,
     RUNNING,
     DUCKING,
     JUMPING,
@@ -8,7 +10,10 @@ from dino_runner.utils.constants import (
     SHIELD_TYPE,
     RUNNING_SHIELD,
     DUCKING_SHIELD,
-    JUMPING_SHIELD
+    JUMPING_SHIELD,
+    RUNNING_HAMMER,
+    DUCKING_HAMMER,
+    JUMPING_HAMMER
 )
 
 class Dinosaur(Sprite):
@@ -18,17 +23,24 @@ class Dinosaur(Sprite):
     JUMP_VEL = 8.5
 
     def __init__(self):
+        self.text_utis = TextUtils()
+   
+
+    def __init__(self):
         self.run_img = {
             DEFAULT_TYPE: RUNNING,
-            SHIELD_TYPE: RUNNING_SHIELD
+            SHIELD_TYPE: RUNNING_SHIELD,
+            HAMMER_TYPE: RUNNING_HAMMER
         }
         self.duck_img = {
             DEFAULT_TYPE: DUCKING,
-            SHIELD_TYPE: DUCKING_SHIELD
+            SHIELD_TYPE: DUCKING_SHIELD,
+            HAMMER_TYPE: DUCKING_HAMMER
         }
         self.jump_img = {
             DEFAULT_TYPE: JUMPING,
-            SHIELD_TYPE: JUMPING_SHIELD
+            SHIELD_TYPE: JUMPING_SHIELD,
+            HAMMER_TYPE: JUMPING_HAMMER
         }
         self.type = DEFAULT_TYPE
 
@@ -45,9 +57,11 @@ class Dinosaur(Sprite):
 
     def setup_state_booleans(self):
         self.has_powerup = False
+        self.hammer = False
         self.shield = False
         self.show_text = False
         self.shield_time_up = 0
+        self.hammer_time_up = 0
 
     def update(self, user_input):
         if self.dino_running:
@@ -75,6 +89,7 @@ class Dinosaur(Sprite):
 
     def draw(self, screen):
         screen.blit(self.image, self.dino_rect)
+       
 
     def run(self):
         self.image = self.run_img[self.type][self.step_index//5]
@@ -104,11 +119,19 @@ class Dinosaur(Sprite):
         if self.shield:
             time_to_show = round((self.shield_time_up - pygame.time.get_ticks())/1000, 2)
             if time_to_show >= 0:
-                #show remaining time
                 pass
+                
             else:
                 self.shield = False
                 self.update_to_default(SHIELD_TYPE)
+
+        if self.hammer:
+            time_to_show = round((self.hammer_time_up - pygame.time.get_ticks())/1000, 2)
+            if time_to_show >= 0:
+                pass
+            else:
+                self.hammer = False
+                self.update_to_default(HAMMER_TYPE)   
 
     def update_to_default(self, current_type):
         if self.type == current_type:

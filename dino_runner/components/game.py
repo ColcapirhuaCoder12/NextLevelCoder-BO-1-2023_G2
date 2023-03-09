@@ -115,3 +115,6 @@ class Game:
              
             if event.type == pygame.KEYDOWN:
                 self.run()
+
+            if event.type == pygame.K_SPACE:
+                self.run = False

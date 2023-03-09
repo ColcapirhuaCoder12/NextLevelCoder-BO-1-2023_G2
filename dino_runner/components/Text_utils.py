@@ -10,7 +10,7 @@ class TextUtils:
     def get_score(self, points):
         font = pygame.font.Font(self.FONT_STYLE, 20)
 
-        Text = font.render('points:' + str(points), True, COLORS['black'])
+        Text = font.render('points:' + str(points), True, COLORS['blue'])
         Text_rect = Text.get_rect()
         Text_rect.center = (1000, 40)
         return Text, Text_rect
@@ -21,4 +21,13 @@ class TextUtils:
         Text = font.render(message, True, COLORS['black'])
         Text_rect = Text.get_rect()
         Text_rect.center = (width, heigth)
+        return Text, Text_rect
+    
+    def get_text_surface(self, time_to_show):
+    
+        font = pygame.font.Font(self.FONT_STYLE, 20)
+
+        Text = font.render('Shield total time:' + str(time_to_show), True, COLORS['red'])
+        Text_rect = Text.get_rect()
+        Text_rect.center = (1000, 40)
         return Text, Text_rect
