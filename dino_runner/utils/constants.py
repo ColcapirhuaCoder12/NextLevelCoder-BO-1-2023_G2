@@ -72,6 +72,7 @@ HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = "shield"
 HAMMER_TYPE = "hammer"
+DINO_DIE = pygame.image.load(os.path.join(IMG_DIR, '/Users/Carmen/Documents/GitHub/NextLevelCoder-BO-1-2023_G2/NEWGAME/dino_runner/assets/Dino/DinoDead.png'))
 
 COLORS = {
     'black': (0,0,0),

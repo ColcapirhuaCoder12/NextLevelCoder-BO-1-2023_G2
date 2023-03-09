@@ -1,4 +1,5 @@
 import pygame
+
 from dino_runner.components.Text_utils import TextUtils
 from dino_runner.components.power_ups.pwr_up_manager import PowerUpManager
 
@@ -88,17 +89,16 @@ class Game:
     def show_menu(self, death_count = 0):
         self.game_running = True
         self.screen.fill(COLORS['white'])
-        bakground = MENU
-        self.screen.blit(bakground, (0, 0))
-
+        
 
         self.print_menu_elements(death_count)
 
         pygame.display.update()
         self.handle_key_event()
-    
-    def print_menu_elements(self,death_count = 0):
+       
 
+    def print_menu_elements(self,death_count = 0):
+        
         Text, Text_Rect = self.text_utils.get_centered_message('Press any key to start')
         self.screen.blit(Text, Text_Rect)
         if death_count > 0:
@@ -116,5 +116,7 @@ class Game:
                 self.playing = False
                 pygame.display.quit()
                 pygame.quit()
-             
-            
+            if event.type == pygame.KEYDOWN:
+                self.run()
+                
+         

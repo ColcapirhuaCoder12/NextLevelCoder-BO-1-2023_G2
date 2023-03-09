@@ -1,8 +1,10 @@
 import pygame
+from pygame import mixer
 from dino_runner.components.Text_utils import TextUtils
 from pygame.sprite import Sprite
 from dino_runner.utils.constants import (
     HAMMER_TYPE,
+    DINO_DIE,
     RUNNING,
     DUCKING,
     JUMPING,
@@ -52,6 +54,7 @@ class Dinosaur(Sprite):
         self.dino_running = True
         self.dino_ducking = False
         self.dino_jumping = False
+        self.dino_colide = False
         self.jump_vel = self.JUMP_VEL
         self.setup_state_booleans()
 
@@ -72,10 +75,12 @@ class Dinosaur(Sprite):
             self.jump()
 
         if user_input[pygame.K_DOWN] and not self.dino_jumping:
+            
             self.dino_running = False
             self.dino_ducking = True
             self.dino_jumping = False
         elif user_input[pygame.K_UP] and not self.dino_jumping:
+
             self.dino_running = False
             self.dino_ducking = False
             self.dino_jumping = True
@@ -107,6 +112,7 @@ class Dinosaur(Sprite):
 
     def jump(self):
         self.image = self.jump_img[self.type]
+        
         if self.dino_jumping:
             self.dino_rect.y -= self.jump_vel * 4 # Salto
             self.jump_vel -= 0.8 # Salto, cuando llega a negativo, baja
@@ -114,6 +120,7 @@ class Dinosaur(Sprite):
             self.dino_rect.y = self.POS_Y
             self.dino_jumping = False
             self.jump_vel = self.JUMP_VEL
+    
 
     def check_invincibility(self):
         if self.shield:
@@ -136,3 +143,12 @@ class Dinosaur(Sprite):
     def update_to_default(self, current_type):
         if self.type == current_type:
             self.type = DEFAULT_TYPE
+
+    def colide_dino(self):
+        self.image = DINO_DIE
+        self.dino_rect = self.image.get_rect()
+        self.dino_rect.x = self.POS_X
+        self.dino_rect.y = self.POS_Y
+        self.dino_running = False
+        self.dino_ducking = False
+        self.dino_jumping = False
